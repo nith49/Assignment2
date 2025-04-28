@@ -320,6 +320,8 @@
             height: auto;
             border-radius: 8px;
             transition: transform 0.3s ease;
+            max-height: 400px; /* Limit image height */
+            object-fit: contain;
         }
         
         .graph-wrapper:hover img {
@@ -664,6 +666,32 @@
             text-shadow: var(--glow);
         }
         
+        /* Comparison row style */
+        .comparison-row {
+            display: flex;
+            align-items: flex-start;
+            margin: 2rem 0;
+            gap: 2rem;
+        }
+        
+        .comparison-graph {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .comparison-details {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .comparison-details ul {
+            margin-left: 1.5rem;
+        }
+        
+        .comparison-details li {
+            margin-bottom: 0.8rem;
+        }
+        
         /* Scrollbar styling */
         ::-webkit-scrollbar {
             width: 10px;
@@ -715,6 +743,10 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .comparison-row {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -760,6 +792,9 @@
                         <li><strong>Algorithm 4 (CoreExact)</strong>: An optimized approach using k-core decomposition</li>
                     </ul>
                     <p>The densest subgraph discovery problem is fundamental to graph mining and has applications in network science, biological analysis, and graph databases. A densest subgraph is a subgraph with maximum edge density (the ratio of edges to vertices).</p>
+                    <div style="margin-top: 1.5rem; text-align: center;">
+                        <a href="report.pdf" class="btn" target="_blank"><i class="fas fa-file-pdf"></i> Download Full Report</a>
+                    </div>
                 </div>
                 
                 <div class="graph-container">
@@ -830,17 +865,6 @@
                     
                     <div class="dataset-card">
                         <div class="dataset-name">
-                            <i class="fas fa-network-wired"></i> AS-733
-                        </div>
-                        <div class="dataset-stats">
-                            <div class="dataset-stat"><i class="fas fa-project-diagram"></i> 1,486 Vertices</div>
-                            <div class="dataset-stat"><i class="fas fa-share-alt"></i> 3,422 Edges</div>
-                        </div>
-                        <p>Another autonomous systems graph capturing a different view of Internet topology. This is a smaller autonomous systems graph with different structural characteristics.</p>
-                    </div>
-                    
-                    <div class="dataset-card">
-                        <div class="dataset-name">
                             <i class="fas fa-dna"></i> Yeast
                         </div>
                         <div class="dataset-stats">
@@ -849,7 +873,16 @@
                         </div>
                         <p>Protein-protein interaction network in budding yeast. Each vertex represents a protein, and edges represent interactions between proteins.</p>
                     </div>
-                    
+                    <div class="dataset-card">
+                        <div class="dataset-name">
+                            <i class="fas fa-network-wired"></i> AS-733
+                        </div>
+                        <div class="dataset-stats">
+                            <div class="dataset-stat"><i class="fas fa-project-diagram"></i> 1,486 Vertices</div>
+                            <div class="dataset-stat"><i class="fas fa-share-alt"></i> 3,422 Edges</div>
+                        </div>
+                        <p>Another autonomous systems graph capturing a different view of Internet topology. This is a smaller autonomous systems graph with different structural characteristics.</p>
+                    </div>
                     <div class="dataset-card">
                         <div class="dataset-name">
                             <i class="fas fa-users"></i> Netscience
@@ -871,7 +904,6 @@
                             <tr>
                                 <th>Dataset</th>
                                 <th>Vertices</th>
-                                
                                 <th>DS Vertices</th>
                                 <th>DS Edges</th>
                                 <th>DS Density</th>
@@ -881,7 +913,6 @@
                             <tr>
                                 <td>AS-Caida</td>
                                 <td>26,475</td>
-                                
                                 <td>88</td>
                                 <td>1,543</td>
                                 <td>17.53</td>
@@ -889,7 +920,6 @@
                             <tr>
                                 <td>CA-HepTh</td>
                                 <td>9,877</td>
-                                
                                 <td>32</td>
                                 <td>496</td>
                                 <td>15.50</td>
@@ -897,7 +927,6 @@
                             <tr>
                                 <td>AS-733</td>
                                 <td>1,486</td>
-                                
                                 <td>31</td>
                                 <td>254</td>
                                 <td>8.19</td>
@@ -905,7 +934,6 @@
                             <tr>
                                 <td>Yeast</td>
                                 <td>1,116</td>
-                                
                                 <td>39</td>
                                 <td>122</td>
                                 <td>3.13</td>
@@ -913,14 +941,13 @@
                             <tr>
                                 <td>Netscience</td>
                                 <td>1,461</td>
-                                
                                 <td>20</td>
                                 <td>190</td>
                                 <td>9.50</td>
                             </tr>
                         </tbody>
                     </table>
-                    <p>DS = Densest Subgraph. Edge Density is calculated as 2|E|/(|V|(|V|-1)).</p>
+                    <p>DS = Densest Subgraph</p>
                 </div>
             </section>
             
@@ -1010,10 +1037,25 @@
                 <h2 class="section-title">Experimental <span>Results</span></h2>
                 <p class="section-subtitle">The experiments demonstrate that CoreExact significantly outperforms the traditional Exact algorithm while maintaining solution accuracy.</p>
                 
-                <div class="graph-container">
-                    <div class="graph-wrapper">
-                        <span class="graph-title">Execution Time Comparison (Log Scale)</span>
-                        <img src="comparison.png" alt="Execution time comparison of Algorithm 1 and Algorithm 4" />
+                <!-- Modified Results Layout -->
+                <div class="comparison-row">
+                    <div class="comparison-graph">
+                        <div class="graph-wrapper">
+                            <span class="graph-title">Execution Time Comparison</span>
+                            <img src="comparison.png" alt="Execution time comparison of Algorithm 1 and Algorithm 4" />
+                        </div>
+                    </div>
+                    <div class="comparison-details">
+                        <h3><i class="fas fa-chart-line"></i> Performance Analysis</h3>
+                        <ul>
+                            <ul>
+                                <li><strong>Dramatic Speedup:</strong> Algorithm 4 (CoreExact) consistently achieves significantly faster execution times compared to Algorithm 1 (Exact) across all datasets.</li>
+                                <li><strong>Massive Gap on AS-Caida:</strong> On the AS-Caida dataset, Algorithm 1 takes about 1,768,273 ms while Algorithm 4 finishes in just 526 ms, demonstrating an extraordinary speedup.</li>
+                                <li><strong>Superior Performance on All Datasets:</strong> Even on smaller datasets like Yeast, NetScience, and AS-733, Algorithm 4 drastically reduces computation time, showing its overall robustness and efficiency.</li>
+                                <li><strong>Scalability Advantage:</strong> Algorithm 4 handles both small and large graphs efficiently, highlighting its better scalability compared to Algorithm 1.</li>
+                            </ul>
+                            
+                        </ul>
                     </div>
                 </div>
                 
@@ -1082,6 +1124,7 @@
                     <p style="margin-top: 1rem;">DS = Densest Subgraph. Both algorithms found identical densest subgraphs, confirming the accuracy of CoreExact.</p>
                 </div>
                 
+                <!-- Another Comparison Section -->
                 <div class="card">
                     <h3><i class="fas fa-search"></i> Key Findings</h3>
                     <ol style="margin-left: 1.5rem;">
@@ -1138,7 +1181,10 @@
                     </ul>
                     
                     <div class="text-center" style="margin-top: 2rem;">
-                        <a href="#overview" class="btn">
+                        <a href="report.pdf" class="btn" target="_blank">
+                            <i class="fas fa-file-pdf"></i> Download Full Report
+                        </a>
+                        <a href="#overview" class="btn" style="margin-left: 1rem;">
                             <i class="fas fa-arrow-up"></i> Back to Top
                         </a>
                     </div>
@@ -1246,10 +1292,7 @@
                 });
             });
         });
-        
-        // Preload the graph image
-        const preloadImage = new Image();
-        preloadImage.src = "C:\Users\pavan\Personal\Acads\College\DAA\website\gener\comparison.png";
     </script>
 </body>
 </html>
+                    
